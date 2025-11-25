@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+import { CartProvider } from "../context/CartContext.jsx";
+import CartBubble from "../components/CartBubble.jsx";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <slot name="head" />
+  </head>
+  <body class="aura-body">
+    <CartProvider client:only="react">
+      <Navbar />
+
+      <main class="container aura-main-container">
+        <slot />
+      </main>
+
+      <Footer />
+
+      <!-- Burbuja flotante -->
+      <CartBubble client:load />
+    </CartProvider>
+  </body>
+</html>

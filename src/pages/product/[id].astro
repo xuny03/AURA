@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import products from "../../data/open-db/products.json";
+
+// 🔥 Obligatorio para rutas dinámicas
+export async function getStaticPaths() {
+  return products.map((p) => ({
+    params: { id: String(p.id) }, // nombre del parámetro dinámico
+    props: { product: p }         // datos para la página
+  }));
+}
+
+const { product } = Astro.props;
+
+// Si no existe el producto
+if (!product) {
+  throw new Error(`Producto no encontrado`);
+}
+---
+
+<BaseLayout title={product.name}>
+  <section class="container py-5">
+    <h1>{product.name}</h1>
+    <p>Categoría: {product.category}</p>
+    <p>Fabricante: {product.manufacturer}</p>
+    <p>Precio: {product.price ? `${product.price} €` : "No disponible"}</p>
+
+    <a href="/products" class="aura-btn-neon mt-4">
+      ← Volver al catálogo
+    </a>
+  </section>
+</BaseLayout>

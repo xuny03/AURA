@@ -1,0 +1,484 @@
+:root {
+  --aura-bg: #050816;
+  --aura-bg-soft: rgba(15, 23, 42, 0.85);
+  --aura-primary: #38bdf8;
+  --aura-secondary: #a855f7;
+  --aura-accent: #22c55e;
+  --aura-text: #e5e7eb;
+  --aura-muted: #9ca3af;
+  --aura-radius-xl: 1.5rem;
+  --aura-glow: 0 0 25px rgba(56, 189, 248, 0.6);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.aura-body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Inter", sans-serif;
+  color: var(--aura-text);
+  background: radial-gradient(circle at top, #1d283a 0, #020617 45%, #000 100%);
+  background-attachment: fixed;
+}
+
+/* Efecto “scanlines” muy suave */
+body.aura-body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 100% 3px;
+  mix-blend-mode: soft-light;
+}
+
+/* Contenedor principal */
+.aura-main-container {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+}
+
+/* Tarjetas futuristas */
+.aura-card {
+  border-radius: var(--aura-radius-xl);
+  background: linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.12),
+      rgba(88, 28, 135, 0.18)
+    ),
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.2), transparent 55%);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.9);
+}
+
+/* Botón neón */
+.aura-btn-neon {
+  position: relative;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  background: radial-gradient(circle at top left, #38bdf8, #0f172a);
+  color: white;
+  padding: 0.7rem 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  overflow: hidden;
+}
+
+.aura-btn-neon::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: conic-gradient(
+    from 0deg,
+    #38bdf8,
+    #a855f7,
+    #22c55e,
+    #38bdf8
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  filter: blur(18px);
+}
+
+.aura-btn-neon span {
+  position: relative;
+  z-index: 1;
+}
+
+.aura-btn-neon:hover::before {
+  opacity: 1;
+}
+
+/* Navbar glass */
+.aura-navbar {
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  backdrop-filter: blur(16px);
+}
+
+.aura-navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: var(--aura-text);
+}
+
+.aura-navbar-accent {
+  background: linear-gradient(to right, #38bdf8, #a855f7);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Hero */
+.aura-hero-title {
+  font-size: clamp(2.6rem, 4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aura-hero-gradient {
+  background: linear-gradient(
+    110deg,
+    #38bdf8,
+    #a855f7,
+    #22c55e,
+    #38bdf8
+  );
+    -webkit-background-clip: text;
+  color: transparent;
+}
+
+.aura-hero-subtitle {
+  color: var(--aura-muted);
+  max-width: 38rem;
+}
+
+/* Glow suave de borde */
+.aura-border-glow {
+  border-radius: var(--aura-radius-xl);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.4), var(--aura-glow);
+}
+
+/* Pequeños chips */
+.aura-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), transparent);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--aura-muted);
+}
+/* Contenedor general */
+.aura-featured-slider {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Slide con tarjeta centrada */
+.aura-slider-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botones limpios futuristas */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #a6e3ff !important;
+  opacity: 0.7;
+  transition: 0.25s ease-out;
+  text-shadow: 0 0 12px rgba(80, 200, 255, 0.8);
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  opacity: 1;
+  transform: scale(1.15);
+  text-shadow: 0 0 18px #6ceaff;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 24px !important;
+}
+
+/* Paginación sutil */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #74d7ff;
+  opacity: 0.35;
+  transition: 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  transform: scale(1.2);
+  background: #c084fc;
+  box-shadow: 0 0 10px #c084fccc;
+}
+
+/* Espaciado inferior del swiper */
+.aura-swiper {
+  padding-bottom: 35px !important;
+}
+/*************** HOME FEATURED CARD ***************/
+.featured-card {
+  background: linear-gradient(145deg, rgba(25,30,50,0.8), rgba(35,10,40,0.7));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 200, 255, 0.15);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease-out;
+}
+
+.featured-card:hover {
+  box-shadow: 0 0 35px rgba(0, 220, 255, 0.35);
+}
+
+.featured-card-image {
+  height: 110px;
+  width: 100%;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: radial-gradient(circle at top, rgba(0,200,255,0.3), transparent),
+              radial-gradient(circle at bottom, rgba(160,80,255,0.25), transparent);
+}
+
+.featured-card-body {
+  padding: 16px;
+}
+
+.featured-chip {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  background: rgba(255,255,255,0.08);
+  color: #c2c2c2;
+  text-transform: uppercase;
+}
+
+.featured-title {
+  font-size: 15px;
+  margin: 6px 0 4px;
+  font-weight: 600;
+}
+
+.featured-brand {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.featured-price {
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #74d7ff;
+}
+
+.featured-btn {
+  width: 100%;
+  border: none;
+  padding: 10px 0;
+  border-radius: 12px;
+  font-size: 13px;
+  color: white;
+  background: linear-gradient(90deg, #00d9ff, #8d3bff);
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
+
+.featured-btn:hover {
+  filter: brightness(1.2);
+}
+
+
+/*************** FEATURED CARD ***************/
+.featured-card {
+  background: linear-gradient(145deg, rgba(28,34,55,0.85), rgba(41,22,58,0.8));
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.15);
+  transition: all 0.25s ease-out;
+}
+
+.featured-card-image {
+  height: 100px;
+  background: radial-gradient(circle at top, rgba(0,180,255,0.3), transparent),
+              radial-gradient(circle at bottom, rgba(180,80,255,0.25), transparent);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.featured-card-body {
+  padding: 16px;
+}
+
+/*************** TEXT + BUTTON ***************/
+.featured-chip {
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.featured-title {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.featured-brand {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.featured-price {
+  margin-top: 4px;
+  font-weight: bold;
+  color: #84e0ff;
+}
+
+.featured-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 0;
+  background: linear-gradient(90deg, #00d4ff, #7b2cff);
+  border-radius: 12px;
+  color: white;
+  border: none;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+.featured-btn:hover {
+  filter: brightness(1.2);
+}
+.featured-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* Botón azul */
+.featured-btn-add {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #00aaff, #0077ff);
+  border: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+  transition: 0.25s ease;
+}
+
+.featured-btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(0,150,255,0.5);
+}
+
+/* Botón púrpura */
+.featured-btn-view {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #6754ff, #b537ff);
+  border: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+.featured-btn-view:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(150,60,255,0.5);
+}
+
+/* Responsive móvil */
+@media (max-width: 480px) {
+  .featured-actions {
+    flex-direction: column;
+  }
+}
+/* Botón flotante del carrito */
+.cart-bubble {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6ff, #7d2cff);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.45);
+  z-index: 999;
+  transition: transform 0.25s ease;
+}
+
+.cart-bubble:hover {
+  transform: scale(1.15);
+}
+
+/* Número de items */
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff0077;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+.cart-bubble {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6ff, #7d2cff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  border: none;
+  z-index: 9999;
+  transition: 0.25s ease;
+}
+
+.cart-bubble:hover {
+  transform: scale(1.15);
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff0077;
+  color: white;
+  font-weight: bold;
+  width: 22px;
+  height: 22px;
+  font-size: 13px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

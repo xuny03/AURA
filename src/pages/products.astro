@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import products from "../data/open-db/products.json";
+
+import ProductGridIsland from "../components/ProductGridIsland.jsx";
+---
+
+<BaseLayout title="Catálogo · Aura Build Picker">
+  <section>
+    <h1 class="mb-3 aura-hero-title">
+      Catálogo <span class="aura-hero-gradient">Completo</span>
+    </h1>
+
+    <p class="aura-hero-subtitle mb-4">
+      Explora más de 25.000 componentes de PC.
+    </p>
+
+    <ProductGridIsland products={products} client:only="react" />
+  </section>
+</BaseLayout>
