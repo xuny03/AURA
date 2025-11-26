@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 
 import { CartProvider } from "../context/CartContext.jsx";
-import CartBubble from "../components/CartBubble.jsx";
 ---
 
 <html lang="es">
@@ -25,8 +24,6 @@ import CartBubble from "../components/CartBubble.jsx";
 
       <Footer />
 
-      <!-- Burbuja flotante -->
-      <CartBubble client:load />
     </CartProvider>
   </body>
 </html>
