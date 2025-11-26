@@ -1,0 +1,10 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import OrderDetailPage from "../../components/orders/OrderDetailPage.jsx";
+
+const { id } = Astro.params;
+---
+
+<BaseLayout>
+  <OrderDetailPage id={Number(id)} client:only="react" />
+</BaseLayout>

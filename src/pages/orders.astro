@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import OrdersPage from "../components/orders/OrdersPage.jsx";
+
+// Aquí podríamos obtener el userId real desde cookies o auth en el futuro.
+// Por ahora se lo dejamos al componente con userId=1 por defecto.
+---
+
+<BaseLayout>
+  <OrdersPage client:only="react" />
+</BaseLayout>

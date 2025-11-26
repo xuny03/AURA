@@ -27,8 +27,7 @@ export default function CheckoutPage() {
 
   // Subtotal
   const total = useMemo(
-    () =>
-      cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    () => cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
     [cart]
   );
 
@@ -44,13 +43,10 @@ export default function CheckoutPage() {
     }
 
     try {
-      const res = await fetch(
-        `http://localhost:8080/api/coupons/${code}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const res = await fetch(`http://localhost:8080/api/coupons/${code}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (!res.ok) {
         setCouponError("Cupón no válido");
@@ -73,7 +69,6 @@ export default function CheckoutPage() {
       });
 
       setCouponError("");
-
     } catch (err) {
       console.error(err);
       setCouponError("Error al conectar con el servidor");
@@ -86,8 +81,12 @@ export default function CheckoutPage() {
   // =======================
   let shippingCost =
     shippingMethod === "express"
-      ? (total > 100 ? 4.99 : 9.99)
-      : (total > 100 ? 0 : 6.99);
+      ? total > 100
+        ? 4.99
+        : 9.99
+      : total > 100
+      ? 0
+      : 6.99;
 
   if (couponApplied?.type === "SHIPPING") {
     shippingCost = 0;
@@ -127,22 +126,42 @@ export default function CheckoutPage() {
       </p>
 
       <form className="checkout-grid" onSubmit={handleSubmit}>
-        
         {/* DATOS PERSONALES */}
         <div className="checkout-card aura-card aura-border-glow">
           <h2 className="checkout-section-title">Datos personales</h2>
-          <label>Nombre completo<input type="text" required /></label>
-          <label>Email<input type="email" required /></label>
-          <label>Teléfono<input type="text" required /></label>
+          <label>
+            Nombre completo
+            <input type="text" required />
+          </label>
+          <label>
+            Email
+            <input type="email" required />
+          </label>
+          <label>
+            Teléfono
+            <input type="text" required />
+          </label>
         </div>
 
         {/* DIRECCIÓN DE ENVÍO */}
         <div className="checkout-card aura-card aura-border-glow">
           <h2 className="checkout-section-title">Dirección de envío</h2>
-          <label>Dirección<input type="text" required /></label>
-          <label>Ciudad<input type="text" required /></label>
-          <label>Código postal<input type="text" required /></label>
-          <label>País<input type="text" required /></label>
+          <label>
+            Dirección
+            <input type="text" required />
+          </label>
+          <label>
+            Ciudad
+            <input type="text" required />
+          </label>
+          <label>
+            Código postal
+            <input type="text" required />
+          </label>
+          <label>
+            País
+            <input type="text" required />
+          </label>
         </div>
 
         {/* MÉTODO DE ENVÍO */}
@@ -150,23 +169,29 @@ export default function CheckoutPage() {
           <h2 className="checkout-section-title">Método de envío</h2>
 
           <div
-            className={`option-box ${shippingMethod === "standard" ? "selected" : ""}`}
+            className={`option-box ${
+              shippingMethod === "standard" ? "selected" : ""
+            }`}
             onClick={() => setShippingMethod("standard")}
           >
             <div className="option-icon">🚚</div>
             <div>
-              <strong>Envío estándar</strong> — {formatPrice(total > 100 ? 0 : 6.99)}
+              <strong>Envío estándar</strong>{" "}
+              {formatPrice(total > 100 ? 0 : 6.99)}
               <p className="shipping-desc">Entrega en 48/72h</p>
             </div>
           </div>
 
           <div
-            className={`option-box ${shippingMethod === "express" ? "selected" : ""}`}
+            className={`option-box ${
+              shippingMethod === "express" ? "selected" : ""
+            }`}
             onClick={() => setShippingMethod("express")}
           >
             <div className="option-icon">⚡</div>
             <div>
-              <strong>Envío express</strong> — {formatPrice(total > 100 ? 4.99 : 9.99)}
+              <strong>Envío express</strong>
+              {formatPrice(total > 100 ? 4.99 : 9.99)}
               <p className="shipping-desc">Entrega en 24h</p>
             </div>
           </div>
@@ -177,7 +202,9 @@ export default function CheckoutPage() {
           <h2 className="checkout-section-title">Método de pago</h2>
 
           <div
-            className={`option-box ${paymentMethod === "card" ? "selected" : ""}`}
+            className={`option-box ${
+              paymentMethod === "card" ? "selected" : ""
+            }`}
             onClick={() => setPaymentMethod("card")}
           >
             <div className="payment-box">
@@ -187,7 +214,9 @@ export default function CheckoutPage() {
           </div>
 
           <div
-            className={`option-box ${paymentMethod === "paypal" ? "selected" : ""}`}
+            className={`option-box ${
+              paymentMethod === "paypal" ? "selected" : ""
+            }`}
             onClick={() => setPaymentMethod("paypal")}
           >
             <div className="payment-box">
@@ -197,13 +226,14 @@ export default function CheckoutPage() {
           </div>
 
           <div
-            className={`option-box ${paymentMethod === "bizum" ? "selected" : ""}`}
+            className={`option-box ${
+              paymentMethod === "bizum" ? "selected" : ""
+            }`}
             onClick={() => setPaymentMethod("bizum")}
           >
-            
             <div className="payment-box">
-              <img src="/images/payments/bizum.png" className="payment-icon" />
               <span>Bizum</span>
+              <img src="/images/payments/bizum.png" className="payment-icon" />
             </div>
           </div>
         </div>
@@ -215,7 +245,9 @@ export default function CheckoutPage() {
           <div className="checkout-summary-items">
             {cart.map((item) => (
               <div key={item.id} className="summary-item">
-                <span>{item.name} × {item.quantity}</span>
+                <span>
+                  {item.name} × {item.quantity}
+                </span>
                 <strong>{formatPrice(item.price * item.quantity)}</strong>
               </div>
             ))}
@@ -229,12 +261,12 @@ export default function CheckoutPage() {
               value={coupon}
               onChange={(e) => setCoupon(e.target.value)}
             />
-            <button type="button" onClick={applyCoupon}>Aplicar</button>
+            <button type="button" onClick={applyCoupon}>
+              Aplicar
+            </button>
           </div>
 
-          {couponError && (
-            <p className="coupon-error">{couponError}</p>
-          )}
+          {couponError && <p className="coupon-error">{couponError}</p>}
 
           {couponApplied && (
             <p className="coupon-success">
@@ -251,7 +283,9 @@ export default function CheckoutPage() {
 
           <div className="summary-row">
             <span>Envío</span>
-            <span>{shippingCost === 0 ? "Gratis" : formatPrice(shippingCost)}</span>
+            <span>
+              {shippingCost === 0 ? "Gratis" : formatPrice(shippingCost)}
+            </span>
           </div>
 
           {discount > 0 && (
@@ -266,7 +300,11 @@ export default function CheckoutPage() {
             <strong>{formatPrice(grandTotal)}</strong>
           </div>
 
-          <button className="aura-btn-glass-neon checkout-submit">
+          <button
+            type="button"
+            onClick={submitOrder}
+            className="aura-btn-glass-neon checkout-submit"
+          >
             <span>Confirmar pedido</span>
           </button>
         </aside>
@@ -274,3 +312,37 @@ export default function CheckoutPage() {
     </section>
   );
 }
+const submitOrder = async () => {
+  try {
+    const orderPayload = {
+      userId: 1, // cambialo cuando tengas login real
+      items: cart.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+      })),
+      couponCode: couponApplied?.code || null,
+    };
+
+    const res = await fetch("http://localhost:8080/api/orders/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderPayload),
+    });
+
+    if (!res.ok) {
+      alert("Error al crear el pedido");
+      return;
+    }
+
+    const createdOrder = await res.json();
+
+    // Limpia carrito
+    localStorage.setItem("cart", "[]");
+
+    // Redirige al detalle del pedido real
+    window.location.href = `/orders/${createdOrder.id}`;
+  } catch (error) {
+    console.error("Error creando pedido:", error);
+    alert("Hubo un error al procesar el pedido");
+  }
+};
