@@ -1,3 +1,6 @@
+/* =========================================================
+   AURA — VARIABLES & BASE
+   ========================================================= */
 :root {
   --aura-bg: #050816;
   --aura-bg-soft: rgba(15, 23, 42, 0.85);
@@ -15,7 +18,14 @@
 *::after {
   box-sizing: border-box;
 }
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
 
+/* =========================================================
+   BODY & BACKGROUND
+   ========================================================= */
 body.aura-body {
   min-height: 100vh;
   margin: 0;
@@ -26,7 +36,7 @@ body.aura-body {
   background-attachment: fixed;
 }
 
-/* Efecto “scanlines” muy suave */
+/* Líneas tipo CRT */
 body.aura-body::before {
   content: "";
   position: fixed;
@@ -42,20 +52,18 @@ body.aura-body::before {
   mix-blend-mode: soft-light;
 }
 
-/* Contenedor principal */
 .aura-main-container {
   padding-top: 5rem;
   padding-bottom: 3rem;
 }
 
-/* Tarjetas futuristas */
+/* =========================================================
+   CARDS FUTURISTAS
+   ========================================================= */
 .aura-card {
   border-radius: var(--aura-radius-xl);
-  background: linear-gradient(
-      135deg,
-      rgba(56, 189, 248, 0.12),
-      rgba(88, 28, 135, 0.18)
-    ),
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12),
+      rgba(88, 28, 135, 0.18)),
     radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 55%),
     radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.2), transparent 55%);
   border: 1px solid rgba(148, 163, 184, 0.35);
@@ -63,7 +71,9 @@ body.aura-body::before {
   box-shadow: 0 18px 50px rgba(15, 23, 42, 0.9);
 }
 
-/* Botón neón */
+/* =========================================================
+   BOTÓN NEÓN
+   ========================================================= */
 .aura-btn-neon {
   position: relative;
   border-radius: 999px;
@@ -76,6 +86,12 @@ body.aura-body::before {
   text-transform: uppercase;
   font-size: 0.78rem;
   overflow: hidden;
+  z-index: 1;
+}
+
+.aura-btn-neon span {
+  position: relative;
+  z-index: 3; /* SIEMPRE por encima del glow */
 }
 
 .aura-btn-neon::before {
@@ -90,20 +106,19 @@ body.aura-body::before {
     #38bdf8
   );
   opacity: 0;
+  filter: blur(14px);
+  z-index: 1; /* Debajo del texto */
   transition: opacity 0.35s ease;
-  filter: blur(18px);
-}
-
-.aura-btn-neon span {
-  position: relative;
-  z-index: 1;
 }
 
 .aura-btn-neon:hover::before {
   opacity: 1;
 }
 
-/* Navbar glass */
+
+/* =========================================================
+   NAVBAR & LOGO
+   ========================================================= */
 .aura-navbar {
   background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
   border-bottom: 1px solid rgba(148, 163, 184, 0.3);
@@ -124,7 +139,9 @@ body.aura-body::before {
   color: transparent;
 }
 
-/* Hero */
+/* =========================================================
+   HERO
+   ========================================================= */
 .aura-hero-title {
   font-size: clamp(2.6rem, 4vw, 3.2rem);
   font-weight: 800;
@@ -133,14 +150,8 @@ body.aura-body::before {
 }
 
 .aura-hero-gradient {
-  background: linear-gradient(
-    110deg,
-    #38bdf8,
-    #a855f7,
-    #22c55e,
-    #38bdf8
-  );
-    -webkit-background-clip: text;
+  background: linear-gradient(110deg, #38bdf8, #a855f7, #22c55e, #38bdf8);
+  -webkit-background-clip: text;
   color: transparent;
 }
 
@@ -149,13 +160,13 @@ body.aura-body::before {
   max-width: 38rem;
 }
 
-/* Glow suave de borde */
+/* Glow de borde */
 .aura-border-glow {
   border-radius: var(--aura-radius-xl);
   box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.4), var(--aura-glow);
 }
 
-/* Pequeños chips */
+/* Chips */
 .aura-chip {
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.4);
@@ -166,20 +177,21 @@ body.aura-body::before {
   letter-spacing: 0.08em;
   color: var(--aura-muted);
 }
-/* Contenedor general */
+
+/* =========================================================
+   SWIPER
+   ========================================================= */
 .aura-featured-slider {
   width: 100%;
   margin-top: 10px;
 }
 
-/* Slide con tarjeta centrada */
 .aura-slider-card {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Botones limpios futuristas */
 .swiper-button-prev,
 .swiper-button-next {
   color: #a6e3ff !important;
@@ -200,7 +212,6 @@ body.aura-body::before {
   font-size: 24px !important;
 }
 
-/* Paginación sutil */
 .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
@@ -216,19 +227,22 @@ body.aura-body::before {
   box-shadow: 0 0 10px #c084fccc;
 }
 
-/* Espaciado inferior del swiper */
 .aura-swiper {
   padding-bottom: 35px !important;
 }
-/*************** HOME FEATURED CARD ***************/
+
+/* =========================================================
+   FEATURED CARDS
+   ========================================================= */
 .featured-card {
-  background: linear-gradient(145deg, rgba(25,30,50,0.8), rgba(35,10,40,0.7));
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(28, 34, 55, 0.85),
+      rgba(41, 22, 58, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 0 30px rgba(0, 200, 255, 0.15);
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease-out;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.15);
+  transition: all 0.25s ease-out;
 }
 
 .featured-card:hover {
@@ -238,9 +252,9 @@ body.aura-body::before {
 .featured-card-image {
   height: 110px;
   width: 100%;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  background: radial-gradient(circle at top, rgba(0,200,255,0.3), transparent),
-              radial-gradient(circle at bottom, rgba(160,80,255,0.25), transparent);
+  background: radial-gradient(circle at top, rgba(0, 180, 255, 0.3), transparent),
+    radial-gradient(circle at bottom, rgba(180, 80, 255, 0.25), transparent);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .featured-card-body {
@@ -251,13 +265,13 @@ body.aura-body::before {
   padding: 3px 10px;
   border-radius: 20px;
   font-size: 10px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #c2c2c2;
   text-transform: uppercase;
 }
 
 .featured-title {
-  font-size: 15px;
+  font-size: 16px;
   margin: 6px 0 4px;
   font-weight: 600;
 }
@@ -268,182 +282,161 @@ body.aura-body::before {
 }
 
 .featured-price {
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #74d7ff;
-}
-
-.featured-btn {
-  width: 100%;
-  border: none;
-  padding: 10px 0;
-  border-radius: 12px;
-  font-size: 13px;
-  color: white;
-  background: linear-gradient(90deg, #00d9ff, #8d3bff);
-  cursor: pointer;
-  transition: 0.2s ease-out;
-}
-
-.featured-btn:hover {
-  filter: brightness(1.2);
-}
-
-
-/*************** FEATURED CARD ***************/
-.featured-card {
-  background: linear-gradient(145deg, rgba(28,34,55,0.85), rgba(41,22,58,0.8));
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 18px;
-  overflow: hidden;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 25px rgba(0, 200, 255, 0.15);
-  transition: all 0.25s ease-out;
-}
-
-.featured-card-image {
-  height: 100px;
-  background: radial-gradient(circle at top, rgba(0,180,255,0.3), transparent),
-              radial-gradient(circle at bottom, rgba(180,80,255,0.25), transparent);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.featured-card-body {
-  padding: 16px;
-}
-
-/*************** TEXT + BUTTON ***************/
-.featured-chip {
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-  font-size: 10px;
-  text-transform: uppercase;
-}
-
-.featured-title {
-  font-size: 16px;
-  margin-top: 8px;
-  margin-bottom: 4px;
-}
-
-.featured-brand {
-  font-size: 11px;
-  opacity: 0.7;
-}
-
-.featured-price {
-  margin-top: 4px;
   font-weight: bold;
+  margin-bottom: 10px;
   color: #84e0ff;
 }
 
 .featured-btn {
   width: 100%;
-  margin-top: 10px;
   padding: 10px 0;
-  background: linear-gradient(90deg, #00d4ff, #7b2cff);
   border-radius: 12px;
   color: white;
   border: none;
   font-size: 13px;
+  background: linear-gradient(90deg, #00d4ff, #7b2cff);
   transition: 0.2s ease;
 }
 
 .featured-btn:hover {
   filter: brightness(1.2);
 }
+/***************************************************
+ AURA — Botones de acción en las Featured Cards
+***************************************************/
+
 .featured-actions {
   display: flex;
   gap: 14px;
   margin-top: 20px;
 }
 
-/* Botón azul */
+/* ---- BOTÓN AZUL: AGREGAR A BUILD ---- */
 .featured-btn-add {
   flex: 1;
   padding: 12px 20px;
   border-radius: 50px;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(90deg, #00aaff, #0077ff);
-  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 14px;
   text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: linear-gradient(90deg, #00aaff, #0077ff);
   transition: 0.25s ease;
+  box-shadow: 0 0 12px rgba(0, 150, 255, 0.25);
 }
 
 .featured-btn-add:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(0,150,255,0.5);
+  box-shadow: 0 0 18px rgba(0, 150, 255, 0.55);
+  filter: brightness(1.2);
 }
 
-/* Botón púrpura */
+/* ---- BOTÓN PÚRPURA: VER MÁS ---- */
 .featured-btn-view {
   flex: 1;
   padding: 12px 20px;
   border-radius: 50px;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(90deg, #6754ff, #b537ff);
-  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 14px;
   text-align: center;
+  cursor: pointer;
   text-decoration: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(90deg, #6754ff, #b537ff);
   transition: 0.25s ease;
+  box-shadow: 0 0 12px rgba(140, 60, 255, 0.25);
 }
 
 .featured-btn-view:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(150,60,255,0.5);
+  box-shadow: 0 0 18px rgba(150, 60, 255, 0.6);
+  filter: brightness(1.2);
 }
 
-/* Responsive móvil */
+/* Responsive — en pantallas pequeñas los botones bajan en columna */
 @media (max-width: 480px) {
   .featured-actions {
     flex-direction: column;
+    gap: 10px;
   }
 }
-/* Botón flotante del carrito */
-.cart-bubble {
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00c6ff, #7d2cff);
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 26px;
+/* ============================================================
+   AURA — GLASS NEON BUTTON (Premium)
+   ============================================================ */
+
+.aura-btn-glass-neon {
+  position: relative;
+  display: inline-block;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(168, 85, 247, 0.6); /* luz morada */
+  background: rgba(255, 255, 255, 0.05);       /* efecto glass */
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  color: white;
-  font-weight: bold;
-  box-shadow: 0 0 18px rgba(0, 200, 255, 0.45);
-  z-index: 999;
-  transition: transform 0.25s ease;
+  overflow: hidden;
+  transition: 0.3s ease;
+  z-index: 1;
 }
 
-.cart-bubble:hover {
-  transform: scale(1.15);
+.aura-btn-glass-neon span {
+  position: relative;
+  z-index: 3; /* el texto siempre encima */
 }
 
-/* Número de items */
-.cart-count {
+/* Glow dinámico detrás */
+.aura-btn-glass-neon::before {
+  content: "";
   position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #ff0077;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: bold;
+  inset: -30%;
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.55),
+    rgba(56, 189, 248, 0.4),
+    rgba(34, 197, 94, 0.3),
+    transparent 70%
+  );
+  filter: blur(22px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
 }
+
+/* Halo exterior para darle más profundidad */
+.aura-btn-glass-neon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.45);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 2;
+}
+
+.aura-btn-glass-neon:hover::before,
+.aura-btn-glass-neon:hover::after {
+  opacity: 1;
+}
+
+.aura-btn-glass-neon:hover {
+  transform: translateY(-2px);
+  border-color: #c084fc;
+}
+
+
+/* =========================================================
+   FLOATING CART BUTTON
+   ========================================================= */
 .cart-bubble {
   position: fixed;
   bottom: 32px;
@@ -460,6 +453,7 @@ body.aura-body::before {
   cursor: pointer;
   border: none;
   z-index: 9999;
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.45);
   transition: 0.25s ease;
 }
 
@@ -472,13 +466,690 @@ body.aura-body::before {
   top: -6px;
   right: -6px;
   background: #ff0077;
-  color: white;
-  font-weight: bold;
   width: 22px;
   height: 22px;
-  font-size: 13px;
   border-radius: 50%;
+  font-size: 13px;
+  color: white;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* =========================================================
+   NAVBAR — HAMBURGUER
+   ========================================================= */
+.aura-toggler {
+  border: 2px solid var(--aura-secondary);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+
+.aura-bars {
+  width: 24px;
+  height: 3px;
+  border-radius: 3px;
+  background-color: white;
+  transition: 0.3s ease;
+}
+
+.aura-toggler:hover .aura-bars {
+  background-color: var(--aura-secondary);
+}
+
+.navbar-toggler[aria-expanded="true"] .aura-bars:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] .aura-bars:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggler[aria-expanded="true"] .aura-bars:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* =========================================================
+   NAVBAR — HOVER LINKS
+   ========================================================= */
+.navbar-nav .nav-link {
+  color: white !important;
+  transition: color 0.25s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--aura-accent) !important;
+}
+
+/* =========================================================
+   CART — WRAPPER (FIJO)
+   ========================================================= */
+.cart-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================================
+   CART — DROPDOWN PREVIEW (FINAL)
+   ========================================================= */
+.cart-preview-container {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  max-height: 300px;
+  background: #1e1e2e;
+  border: 2px solid #a855f7;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  animation: fadeDown 0.25s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   CART — SCROLL
+   ========================================================= */
+.scrollable {
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: #2a2a3c;
+}
+
+/* =========================================================
+   CART — PRODUCT ROW
+   ========================================================= */
+.cart-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.cart-preview-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.cart-preview-info {
+  flex: 1;
+  display:flex;
+  flex-direction:column;
+}
+
+.cart-preview-name {
+  color: white;
+  font-size: 0.85rem;
+}
+
+.cart-preview-price {
+  color: #a855f7;
+  font-weight: bold;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CART — BOTONES +/- CANTIDAD
+   ========================================================= */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-btn {
+  background: #a855f7;
+  color: white;
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-weight:bold;
+}
+
+.qty-btn:hover {
+  background: #c084fc;
+}
+
+.cart-preview-qty {
+  color: white;
+  font-size: 0.8rem;
+}
+
+/* Carrito vacío */
+.cart-preview-empty {
+  text-align: center;
+  padding: 12px 0;
+  color: #bbb;
+}
+/* Carrito en móvil: arriba, junto al hamburguesa */
+.cart-wrapper-desktop-mobile {
+  display: flex;
+  align-items: center;
+}
+
+/* En PC, ocultar el carrito móvil y usar el de la lista */
+@media (min-width: 992px) {
+  .cart-wrapper-desktop-mobile {
+    display: none;
+  }
+  .cart-inline-desktop {
+    display: flex !important;
+  }
+}
+
+/* En móvil, carrito pegado a la derecha del logo */
+@media (max-width: 991px) {
+  .cart-inline-desktop {
+    display: none !important;
+  }
+}
+/* =========================================================
+   AURA — CART PAGE (E-COMMERCE STYLE)
+   ========================================================= */
+
+.aura-cart-page {
+  max-width: 1120px;
+}
+
+.aura-cart-header {
+  margin-bottom: 2rem;
+}
+
+.aura-cart-title {
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.aura-cart-subtitle {
+  color: var(--aura-muted);
+  max-width: 34rem;
+  font-size: 0.95rem;
+}
+
+/* Layout: lista + resumen */
+.aura-cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .aura-cart-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Lista de items */
+.aura-cart-items {
+  padding: 1.25rem 1.35rem;
+}
+
+.aura-cart-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.aura-cart-item:last-child {
+  border-bottom: none;
+}
+
+.aura-cart-item-main {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.aura-cart-item-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.aura-cart-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.aura-cart-item-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.aura-cart-item-category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--aura-muted);
+}
+
+.aura-cart-item-unit {
+  font-size: 0.8rem;
+  color: var(--aura-muted);
+}
+
+/* Panel derecho del item */
+.aura-cart-item-side {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.aura-cart-qty-controls .qty-btn {
+  width: 24px;
+  height: 24px;
+  font-size: 0.85rem;
+}
+
+.aura-cart-item-total {
+  min-width: 90px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--aura-primary);
+}
+
+.aura-cart-remove {
+  border: none;
+  background: transparent;
+  color: var(--aura-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.aura-cart-remove:hover {
+  color: #f87171;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .aura-cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .aura-cart-item-side {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .aura-cart-item-total {
+    text-align: right;
+  }
+}
+
+/* Summary */
+.aura-cart-summary {
+  padding: 1.4rem 1.3rem;
+}
+
+.aura-cart-summary-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.aura-cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.aura-cart-summary-row-muted {
+  font-size: 0.8rem;
+  color: var(--aura-muted);
+}
+
+.aura-cart-divider {
+  border: none;
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+  margin: 0.9rem 0;
+}
+
+.aura-cart-summary-total {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Summary buttons */
+.aura-cart-summary-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.aura-cart-clear {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: transparent;
+  color: var(--aura-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding: 0.55rem 0.9rem;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.aura-cart-clear:hover {
+  border-color: #f97373;
+  color: #fecaca;
+}
+
+.aura-cart-checkout {
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(90deg, #38bdf8, #a855f7);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding: 0.7rem 1rem;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+  transition: 0.25s ease;
+}
+
+.aura-cart-checkout:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Empty state */
+.aura-cart-empty {
+  padding: 2.4rem 2rem;
+  text-align: center;
+}
+
+.aura-cart-cta {
+  margin-top: 1.6rem;
+  display: inline-block;
+}
+/* ==============================
+   CHECKOUT AURA
+   ============================== */
+
+.checkout-title {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.checkout-subtitle {
+  color: var(--aura-muted);
+  margin-bottom: 2rem;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkout-card {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkout-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.checkout-card label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  gap: 0.3rem;
+}
+
+.checkout-card input[type="text"],
+.checkout-card input[type="email"],
+.checkout-card input[type="number"] {
+  padding: 0.55rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--aura-text);
+}
+
+.checkout-card input:focus {
+  border-color: var(--aura-primary);
+}
+
+/* Shipping */
+.shipping-option {
+  display: flex;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.shipping-desc {
+  color: var(--aura-muted);
+  font-size: 0.75rem;
+}
+
+/* Payment */
+.payment-option {
+  display: flex;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+/* Summary */
+.checkout-summary {
+  padding: 1.6rem;
+  height: fit-content;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4rem 0;
+  color: var(--aura-muted);
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-top: 0.7rem;
+}
+
+.checkout-divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin: 1rem 0;
+}
+
+.checkout-submit {
+  width: 100%;
+  margin-top: 1.2rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+.payment-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.payment-icon {
+  height: 26px;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.2));
+}
+
+/* ===========================================
+   AURA CHECKOUT — Opciones centradas y neon
+   =========================================== */
+
+.option-box {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.option-box:hover {
+  border-color: var(--aura-primary);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+/* Estado seleccionado sin burbuja */
+.option-box.selected {
+  border-color: var(--aura-secondary);
+  background: rgba(168, 85, 247, 0.12);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Para texto dentro de opciones */
+.option-box strong {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.option-box span {
+  color: #dbeafe;
+}
+
+/* Descripción pequeña */
+.shipping-desc {
+  font-size: 0.75rem;
+  color: var(--aura-muted);
+}
+
+/* Centrado general */
+.checkout-card .option-box {
+  text-align: left;
+}
+/* Mensajes de cupones */
+.coupon-success {
+  color: #4ade80;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.45);
+}
+
+.coupon-error {
+  color: #fb7185;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  text-shadow: 0 0 8px rgba(251, 113, 133, 0.45);
+}
+
+/* Checkout coupon input */
+.coupon-box input {
+  flex: 1;
+  padding: 0.65rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  transition: 0.25s;
+}
+
+.coupon-box input:focus {
+  border-color: var(--aura-primary);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+}
+
+/* Aplicar botón neon */
+.coupon-box button {
+  background: linear-gradient(135deg, #38bdf8, #a855f7);
+  border-radius: 8px;
+  border: none;
+  color: white;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.coupon-box button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
 }

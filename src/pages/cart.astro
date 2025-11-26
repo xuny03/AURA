@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CartPage from "../components/CartPage.jsx";
+import CartPage from "../components/cart/CartPage.jsx";
 ---
 
-<BaseLayout title="Carrito · Aura Build Picker">
-  <CartPage client:load />
+<BaseLayout>
+  <CartPage client:only="react" />
 </BaseLayout>

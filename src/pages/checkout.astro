@@ -1,0 +1,8 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CheckoutPage from "../components/checkout/CheckoutPage.jsx";
+---
+
+<BaseLayout>
+  <CheckoutPage client:only="react" />
+</BaseLayout>
