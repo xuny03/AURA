@@ -15,10 +15,22 @@ export default function OrderDetailPage({ id }) {
   // GET pedido
   // ============================
   const fetchOrder = async () => {
-    const res = await fetch(`http://localhost:8080/api/orders/${id}`);
-    const data = await res.json();
-    setOrder(data);
-  };
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:8080/api/orders/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error("No autorizado");
+  }
+
+  const data = await res.json();
+  setOrder(data);
+};
+
 
   // ============================
   // GET detalles de cada producto

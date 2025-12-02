@@ -1,8 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import products from "../data/open-db/products.json";
-
 import ProductGridIsland from "../components/ProductGridIsland.jsx";
+
+// Página actual desde la URL
+const url = new URL(Astro.request.url);
+const currentPage = Number(url.searchParams.get("page") ?? 0);
+
+// Llamada paginada al backend
+const res = await fetch(`http://localhost:8080/api/products?page=${currentPage}`);
+
+if (!res.ok) {
+  throw new Error("Error cargando productos: " + res.status);
+}
+
+const data = await res.json();
+
+// ✅ CLAVE: solo extraemos el ARRAY real
+const products = data.content ?? [];
+const totalPages = data.totalPages ?? 1;
 ---
 
 <BaseLayout title="Catálogo · Aura Build Picker">
@@ -11,10 +26,11 @@ import ProductGridIsland from "../components/ProductGridIsland.jsx";
       Catálogo <span class="aura-hero-gradient">Completo</span>
     </h1>
 
-    <p class="aura-hero-subtitle mb-4">
-      Explora más de 25.000 componentes de PC.
-    </p>
-
-    <ProductGridIsland products={products} client:only="react" />
+    <ProductGridIsland
+      products={products}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      client:load
+    />
   </section>
 </BaseLayout>

@@ -1,60 +1,15 @@
 import { motion } from "framer-motion";
 import useCart from "../hooks/useCart.js";
 
-// ----------------------------
-//  RESUMEN DE ESPECIFICACIONES
-// ----------------------------
-function getSpecsSummary(product) {
-  const cat = (product.category || "").toLowerCase();
-
-  if (cat === "cpu") {
-    return [
-      `${product.cores ?? "?"}c / ${product.threads ?? "?"}t`,
-      [
-        product.baseClock && `${product.baseClock} GHz`,
-        product.boostClock && `${product.boostClock} GHz`,
-      ]
-        .filter(Boolean)
-        .join(" · "),
-      product.socket && `Socket ${product.socket}`,
-    ].filter(Boolean);
-  }
-
-  if (cat === "gpu") {
-    return [product.vram ? `${product.vram} GB VRAM` : null].filter(Boolean);
-  }
-
-  if (cat === "ram") {
-    return [
-      product.capacity ? `${product.capacity} GB` : null,
-      product.speed ? `${product.speed} MHz` : null,
-    ].filter(Boolean);
-  }
-
-  if (cat === "storage") {
-    return [
-      product.capacity ? `${product.capacity} GB` : null,
-      product.type,
-    ].filter(Boolean);
-  }
-
-  if (cat === "motherboard") {
-    return [product.socket && `Socket ${product.socket}`].filter(Boolean);
-  }
-
-  return [];
-}
-
-// ----------------------------
-//       TARJETA DE PRODUCTO
-// ----------------------------
 export default function ProductCard({ product }) {
-  // ⭐ Hooks SIEMPRE dentro del componente
+  if (!product) return null;
+
   const { addToCart } = useCart() || {};
 
-  const specs = getSpecsSummary(product);
-  const catLabel = (product.category || "other").toUpperCase();
-  const manufacturer = product.manufacturer || "Desconocido";
+  // ✅ Protección contra category que no sea string
+  const catLabel = String(product.category || "other").toUpperCase();
+
+  const manufacturer = product.manufacturer || "Aura";
 
   const priceText =
     product.price !== undefined && product.price !== null
@@ -73,7 +28,7 @@ export default function ProductCard({ product }) {
       }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      {/* 🔥 Toda la tarjeta clicable excepto el botón */}
+      {/* 🔥 Toda la tarjeta clicable */}
       <a
         href={`/product/${product.id}`}
         style={{
@@ -102,23 +57,15 @@ export default function ProductCard({ product }) {
           {product.name}
         </h5>
 
-        {specs.length > 0 && (
-          <ul className="small text-secondary mb-2 ps-3">
-            {specs.map((s, idx) => (
-              <li key={idx}>{s}</li>
-            ))}
-          </ul>
-        )}
-
         <p className="fw-semibold mb-3">{priceText}</p>
       </a>
 
-      {/* Botón independiente */}
+      {/* ✅ Botón seguro */}
       <button
         className="mt-auto aura-btn-neon"
         onClick={(e) => {
-          e.preventDefault(); // evita romper el enlace del card-click
-          addToCart(product);
+          e.preventDefault();
+          addToCart?.(product);
         }}
       >
         <span>Agregar a build</span>

@@ -1,13 +1,40 @@
-import { useContext } from "react";
-import CartContext from "../context/CartContext.jsx";
+import { getCartKey } from "../components/auth/cartKey";
 
 export default function useCart() {
-  const ctx = useContext(CartContext);
 
-  if (!ctx) {
-    console.warn("useCart usado fuera de CartProvider");
-    return null;
-  }
+  const getCart = () => {
+    const saved = localStorage.getItem(getCartKey());
+    return saved ? JSON.parse(saved) : [];
+  };
 
-  return ctx;
+  const saveCart = (cart) => {
+    localStorage.setItem(getCartKey(), JSON.stringify(cart));
+    window.dispatchEvent(new CustomEvent(
+      "cart-updated",
+      { detail: cart }
+    ));
+  };
+
+  const addToCart = (product) => {
+    const cart = getCart();
+
+    const existing = cart.find(i => i.id === product.id);
+
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        ...product,
+        quantity: 1,
+      });
+    }
+
+    saveCart(cart);
+  };
+
+  return {
+    addToCart,
+    getCart,
+    saveCart
+  };
 }

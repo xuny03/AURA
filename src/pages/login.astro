@@ -1,0 +1,15 @@
+---
+// src/pages/login.astro
+import LoginForm from "../components/LoginForm.jsx";
+import "../styles/global.css";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login - Tienda</title>
+  </head>
+  <body>
+    <LoginForm client:load />
+  </body>
+</html>

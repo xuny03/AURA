@@ -1,10 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FeaturedSlider from "../components/FeaturedSlider.jsx";
-import products from "../data/open-db/products.json";
-import ReactShell from "../components/ReactShell";
-import ProductGrid from "../components/ProductGrid";
 
+// ✅ Cargamos desde el BACKEND
+const response = await fetch("http://localhost:8080/api/products");
+
+if (!response.ok) {
+  throw new Error("Error al cargar productos");
+}
+
+const data = await response.json();
+
+// ✅ Extraemos el array REAL
+const products = Array.isArray(data)
+  ? data
+  : data.content;
+
+// ⭐ SOLO AGARRAMOS DESTACADOS
 const featured = products.slice(0, 12);
 ---
 
@@ -16,17 +28,18 @@ const featured = products.slice(0, 12);
       <h1 class="aura-hero-title mb-3">
         Construye tu <span class="aura-hero-gradient">setup definitivo</span>
       </h1>
+
       <p class="aura-hero-subtitle">
-        Explora un catálogo masivo de componentes con una interfaz rápida, animada y
-        lista para tu tienda gaming.
+        Explora un catálogo masivo de componentes con una interfaz rápida,
+        animada y lista para tu tienda gaming.
       </p>
+
       <a href="/products" class="aura-btn-glass-neon mt-3">
         <span>Ver catálogo</span>
       </a>
     </div>
   </section>
 
-  <!-- ⭐ AQUÍ VA EL SLIDER, DENTRO DEL LAYOUT -->
   <section class="mt-5">
     <h2 class="h4 mb-3">Destacados</h2>
     <FeaturedSlider products={featured} client:only="react" />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { isAdmin } from "../auth/auth";
 
 const formatPrice = (value) =>
   new Intl.NumberFormat("es-ES", {
@@ -7,47 +8,65 @@ const formatPrice = (value) =>
   }).format(value || 0);
 
 export default function OrdersPage() {
-  // TODO: reemplazar userId cuando tengas login real
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
- const fetchOrders = async () => {
-  try {
-    const url = "http://localhost:8080/api/orders";
-    console.log("FRONTEND FETCH →", url);
+  const fetchOrders = async () => {
+    try {
+      const url = "http://localhost:8080/api/orders";
 
-    const res = await fetch(url);
-    const data = await res.json();
+      const token = localStorage.getItem("token");
 
-    console.log("BACKEND RESPONSE →", data);
+      const res = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    setOrders(data);
-  } catch (err) {
-    console.error("❌ Error cargando pedidos:", err);
-  } finally {
-    setLoading(false);
-  }
-};
+      if (!res.ok) {
+        throw new Error(`HTTP Error ${res.status}`);
+      }
 
+      const data = await res.json();
+      console.log("BACKEND RESPONSE →", data);
+
+      setOrders(data);
+    } catch (err) {
+      console.error("❌ Error cargando pedidos:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
+
+    // 🛑 PROTECCIÓN FRONT
+    if (!isAdmin()) {
+      window.location.href = "/";
+      return;
+    }
+
     fetchOrders();
+
   }, []);
 
   const getStatusColor = (status) => {
     switch (status) {
       case "PENDING":
-        return "#fbbf24"; // Amarillo
+        return "#fbbf24";
       case "SHIPPED":
-        return "#38bdf8"; // Azul
+        return "#38bdf8";
       case "DELIVERED":
-        return "#4ade80"; // Verde
+        return "#4ade80";
       case "CANCELLED":
-        return "#f43f5e"; // Rojo
+        return "#f43f5e";
       default:
-        return "#a855f7"; // Morado Aura
+        return "#a855f7";
     }
   };
+
+  if (!isAdmin()) return null;
 
   if (loading) {
     return <div className="orders-loading">Cargando pedidos...</div>;
@@ -55,38 +74,35 @@ export default function OrdersPage() {
 
   return (
     <section className="orders-page container py-4">
-      <h1 className="orders-title">Pedidos realizados</h1>
+
+      <h1 className="orders-title">Pedidos</h1>
+
       <p className="orders-subtitle">
-        Consulta todos los pedidos asociados a tu cuenta.
+        Vista administrativa completa de pedidos del sistema.
       </p>
 
       <div className="orders-list">
+
         {orders.length === 0 && (
-          <p className="orders-empty">Todavía no has realizado ningún pedido.</p>
+          <p className="orders-empty">No existen pedidos todavía.</p>
         )}
 
         {orders.map((order) => (
           <div key={order.id} className="order-card aura-card aura-border-glow">
-            
-            {/* HEADER */}
+
             <div className="order-header">
               <h2>Pedido #{order.id}</h2>
 
               <span
                 className="order-status"
-                style={{
-                  backgroundColor: getStatusColor(order.status),
-                }}
+                style={{ backgroundColor: getStatusColor(order.status) }}
               >
                 {order.status}
               </span>
             </div>
 
-            {/* INFO PRINCIPAL */}
             <div className="order-info">
-              <p>
-                <strong>ID Usuario:</strong> {order.userId}
-              </p>
+              <p><strong>ID Usuario:</strong> {order.userId}</p>
 
               {order.couponCode && (
                 <p>
@@ -99,7 +115,6 @@ export default function OrdersPage() {
               </p>
             </div>
 
-            {/* LISTA DE ITEMS — Opción A: productId + quantity */}
             <div className="order-items">
               {order.items.map((item, i) => (
                 <div key={i} className="order-item">
@@ -109,7 +124,6 @@ export default function OrdersPage() {
               ))}
             </div>
 
-            {/* FOOTER */}
             <div className="order-footer">
               <a href={`/orders/${order.id}`} className="aura-btn-glass-neon">
                 <span>Ver detalles</span>

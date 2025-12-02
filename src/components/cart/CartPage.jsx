@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
+import { getCart, saveCart, clearCart as clearUserCart } from "../auth/cartStorage";
+
 
 const formatPrice = (value) => {
   if (value == null || isNaN(value)) return "N/D";
@@ -12,42 +14,31 @@ export default function CartPage() {
   const [cart, setCart] = useState([]);
 
   // Carga inicial + suscripción a cambios
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+ // Carga inicial + escucha de cambios
+useEffect(() => {
+  if (typeof window === "undefined") return;
 
-    const readCart = () => {
-      try {
-        const saved = localStorage.getItem("cart");
-        setCart(saved ? JSON.parse(saved) : []);
-      } catch (e) {
-        console.error("Error leyendo carrito", e);
-        setCart([]);
-      }
-    };
+  const readCart = () => {
+    const data = getCart();
+    setCart(data);
+  };
 
-    readCart();
+  readCart();
 
-    const handleCartUpdated = (event) => {
-      setCart(event.detail || []);
-    };
+  const handleCartUpdated = () => readCart();
 
-    const handleStorage = (event) => {
-      if (event.key === "cart") readCart();
-    };
+  window.addEventListener("cart-updated", handleCartUpdated);
 
-    window.addEventListener("cart-updated", handleCartUpdated);
-    window.addEventListener("storage", handleStorage);
-    return () => {
-      window.removeEventListener("cart-updated", handleCartUpdated);
-      window.removeEventListener("storage", handleStorage);
-    };
-  }, []);
+  return () => window.removeEventListener("cart-updated", handleCartUpdated);
+}, []);
+
 
   const persistCart = (updated) => {
-    localStorage.setItem("cart", JSON.stringify(updated));
-    window.dispatchEvent(new CustomEvent("cart-updated", { detail: updated }));
-    setCart(updated);
-  };
+  saveCart(updated);
+  window.dispatchEvent(new CustomEvent("cart-updated"));
+  setCart(updated);
+};
+
 
   const updateQty = (id, delta) => {
     const updated = cart
@@ -67,8 +58,10 @@ export default function CartPage() {
   };
 
   const clearCart = () => {
-    persistCart([]);
-  };
+  clearUserCart();
+  setCart([]);
+};
+
 
   const { itemsTotal, itemCount } = useMemo(() => {
     const itemsTotal = cart.reduce(

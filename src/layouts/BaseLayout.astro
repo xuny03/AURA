@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "../components/Navbar.astro";
+import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.astro";
 
 
@@ -17,7 +17,7 @@ import { CartProvider } from "../context/CartContext.jsx";
   </head>
   <body class="aura-body">
     <CartProvider client:only="react">
-      <Navbar />
+      <Navbar client:load currentPath={Astro.url.pathname} />
 
       <main class="container aura-main-container">
         <slot />
