@@ -1,0 +1,10 @@
+---
+import "../styles/global.css";
+import ProfilePage from "../components/ProfilePage.jsx";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+<hydrate>
+  <ProfilePage client:load />
+</hydrate>
+</BaseLayout>

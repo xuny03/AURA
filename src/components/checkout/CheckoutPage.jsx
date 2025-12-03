@@ -117,11 +117,11 @@ export default function CheckoutPage() {
     }
 
     const payload = {
-      total: grandTotal, // ✅ AÑADIDO
+      total: parseFloat(grandTotal.toFixed(2)),
       items: cart.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
-        unitPrice: item.price // también correcto incluirlo
+        unitPrice: parseFloat(item.price.toFixed(2)),
       })),
       couponCode: couponApplied?.code ?? null,
       shippingMethod,
@@ -140,7 +140,7 @@ export default function CheckoutPage() {
     });
 
     if (res.status === 403) {
-      alert("Acceso denegado: usuario no autorizado");
+      alert("Acceso denegado");
       return;
     }
 
@@ -155,13 +155,14 @@ export default function CheckoutPage() {
 
     clearCart();
     window.dispatchEvent(new CustomEvent("cart-updated"));
-
     window.location.href = `/orders/${created.id}`;
+
   } catch (err) {
     console.error(err);
     alert("Error procesando pedido");
   }
 };
+
 
 
 

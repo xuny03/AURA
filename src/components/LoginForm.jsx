@@ -29,6 +29,7 @@ export default function LoginForm() {
       }
 
       const data = await res.json();
+      localStorage.setItem("roles", JSON.stringify(data.roles));
       saveAuth(data);
 
       window.location.href = "/";
